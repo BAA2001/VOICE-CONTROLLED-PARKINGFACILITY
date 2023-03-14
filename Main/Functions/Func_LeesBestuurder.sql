@@ -1,0 +1,18 @@
+USE [VOICE_CONTROLLED_PARKINGFACILITY];
+GO
+
+CREATE OR ALTER FUNCTION func_LeesBestuurder
+(
+	@zin VARCHAR(100)
+)
+
+RETURNS VARCHAR(30)
+AS
+BEGIN
+	DECLARE @BestuurderResult VARCHAR(30) = (
+		SELECT TOP 1 value  
+		FROM STRING_SPLIT(@zin, ' ')
+		)
+
+	RETURN @BestuurderResult
+END
