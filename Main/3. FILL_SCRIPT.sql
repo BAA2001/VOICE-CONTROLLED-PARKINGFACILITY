@@ -2,6 +2,7 @@ use VOICE_CONTROLLED_PARKINGFACILITY;
 delete from [PARKEERLOCATIE]
 delete from [AUTO];
 delete from BESTUURDER;
+delete from UURPRIJS;
 
 insert into bestuurder (naam) values ('Clementine');
 insert into bestuurder (naam) values ('Pasquale');
@@ -229,4 +230,6 @@ values	('A1', null), ('A2', null), ('A3', null), ('A4', null), ('A5', null),
 		('C1', null), ('C2', null), ('C3', null), ('C4', null), ('C5', null)
 ;
 
-select * from PARKEERLOCATIE
+insert into uurprijs
+values (1.50);
+
