@@ -1,4 +1,6 @@
 use VOICE_CONTROLLED_PARKINGFACILITY;
+delete from TRANSACTIE_GESCHIEDENIS
+delete from [CHECK-IN_OUT];
 delete from [PARKEERLOCATIE]
 delete from [AUTO];
 delete from BESTUURDER;
@@ -233,3 +235,16 @@ values	('A1', null), ('A2', null), ('A3', null), ('A4', null), ('A5', null),
 insert into uurprijs
 values (1.50);
 
+
+declare @iteration int = 1
+declare @random float
+
+while @iteration <= 100
+begin	
+	set @random = rand();
+	exec stp_fill_history @iteration, @random;
+	set @iteration = @iteration + 1;
+end
+
+select * from [CHECK-IN_OUT]
+select * from [TRANSACTIE_GESCHIEDENIS]
