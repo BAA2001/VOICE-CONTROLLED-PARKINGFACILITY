@@ -1,8 +1,12 @@
 USE [master]
 
-drop database if exists [VOICE_CONTROLLED_PARKINGFACILITY]
-drop database if exists [TAAL]
-drop database if exists [LOG]
+alter database [VOICE_CONTROLLED_PARKINGFACILITY] set single_user with rollback immediate;
+alter database [TAAL] set single_user with rollback immediate;
+alter database [LOG] set single_user with rollback immediate;
+
+drop database if exists [VOICE_CONTROLLED_PARKINGFACILITY];
+drop database if exists [TAAL];
+drop database if exists [LOG];
 
 CREATE DATABASE [VOICE_CONTROLLED_PARKINGFACILITY]
 CREATE DATABASE [TAAL]
