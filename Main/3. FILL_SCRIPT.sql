@@ -56,56 +56,6 @@ insert into bestuurder (naam) values ('Paulo');
 insert into bestuurder (naam) values ('Tirrell');
 insert into bestuurder (naam) values ('Gaspar');
 insert into bestuurder (naam) values ('Beckie');
-insert into bestuurder (naam) values ('Carolyne');
-insert into bestuurder (naam) values ('Gay');
-insert into bestuurder (naam) values ('Renell');
-insert into bestuurder (naam) values ('Brewer');
-insert into bestuurder (naam) values ('Morton');
-insert into bestuurder (naam) values ('Lorianna');
-insert into bestuurder (naam) values ('Delaney');
-insert into bestuurder (naam) values ('Symon');
-insert into bestuurder (naam) values ('Christian');
-insert into bestuurder (naam) values ('Letitia');
-insert into bestuurder (naam) values ('Jory');
-insert into bestuurder (naam) values ('Hinda');
-insert into bestuurder (naam) values ('Evonne');
-insert into bestuurder (naam) values ('Cosme');
-insert into bestuurder (naam) values ('Filia');
-insert into bestuurder (naam) values ('Frederich');
-insert into bestuurder (naam) values ('Gerardo');
-insert into bestuurder (naam) values ('Cathrine');
-insert into bestuurder (naam) values ('Sarene');
-insert into bestuurder (naam) values ('Mikkel');
-insert into bestuurder (naam) values ('Dennet');
-insert into bestuurder (naam) values ('Felike');
-insert into bestuurder (naam) values ('Nero');
-insert into bestuurder (naam) values ('Giffy');
-insert into bestuurder (naam) values ('Peggie');
-insert into bestuurder (naam) values ('Rosaline');
-insert into bestuurder (naam) values ('Celie');
-insert into bestuurder (naam) values ('Casie');
-insert into bestuurder (naam) values ('Carline');
-insert into bestuurder (naam) values ('Stacia');
-insert into bestuurder (naam) values ('Obidiah');
-insert into bestuurder (naam) values ('Demott');
-insert into bestuurder (naam) values ('Bee');
-insert into bestuurder (naam) values ('Bard');
-insert into bestuurder (naam) values ('Bernadene');
-insert into bestuurder (naam) values ('Torin');
-insert into bestuurder (naam) values ('Owen');
-insert into bestuurder (naam) values ('Lee');
-insert into bestuurder (naam) values ('Anthony');
-insert into bestuurder (naam) values ('Jillane');
-insert into bestuurder (naam) values ('Dayna');
-insert into bestuurder (naam) values ('Betsy');
-insert into bestuurder (naam) values ('Kaylee');
-insert into bestuurder (naam) values ('Darleen');
-insert into bestuurder (naam) values ('Meggy');
-insert into bestuurder (naam) values ('Felipe');
-insert into bestuurder (naam) values ('Petronilla');
-insert into bestuurder (naam) values ('Clarey');
-insert into bestuurder (naam) values ('Jodi');
-insert into bestuurder (naam) values ('Wallis');
 
 create table temp_licenceplate
 (
@@ -222,7 +172,7 @@ from (select plate, row_number() over (order by newid()) as seqnum
      (select naam, row_number() over (order by newid()) as seqnum
       from BESTUURDER
      ) as t2
-     on t.seqnum = t2.seqnum;
+     on (t.seqnum % 50) = t2.seqnum;
 
 drop table temp_licenceplate;
 
@@ -241,13 +191,11 @@ declare @iteration int = 1
 declare @random float
 
 while @iteration <= 100
-begin	
-	set @random = rand();
-	exec stp_fill_history @iteration, @random;
+begin
+	exec stp_fill_history @iteration;
 	set @iteration = @iteration + 1;
 end
 
 set identity_insert [check-in_out] OFF;
 
-select * from [CHECK-IN_OUT]
-select * from [TRANSACTIE_GESCHIEDENIS]
+select * from [AUTO] order by FK_Naam
