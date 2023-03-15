@@ -12,6 +12,7 @@ BEGIN
 	DECLARE @Bestuurder VARCHAR(30) = (SELECT dbo.func_LeesBestuurder)
 	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_LeesWerkwoord)
 	DECLARE @Kenteken VARCHAR(10) = (SELECT dbo.func_LeesKenteken)
+	DECLARE @Plek VARCHAR(10) = (SELECT dbo.func_getParkingSpot)
 	
 	DECLARE @Zin VARCHAR(100)
 	DECLARE @Infinitief VARCHAR(30) = (SELECT zww.Infinitief FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
@@ -23,7 +24,7 @@ BEGIN
 
 
 	--Woordvolgorde bij de actie 'parkeren'
-	IF ((SELECT sww.actie FROM SterkeWW sww WHERE sww.Stam = @Stam) = 'parkeren' OR (SELECT zww.actie FROM ZwakkeWW zww WHERE zww.Stam = @Stam) = 'parkeren') 
+	IF (SELECT dbo.FUNC_ActieBepaler) = 'parkeren'
 	BEGIN
 		IF EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.Stam = @Stam) 
 		BEGIN
@@ -31,7 +32,10 @@ BEGIN
 					' '
 			,		(UPPER(LEFT(@Bestuurder, 1)) + SUBSTRING(@Bestuurder, 2, LEN(@Bestuurder)))
 			,		(SELECT sww.hulpwerkwoord FROM SterkeWW sww WHERE sww.Stam = @Stam)
-			,		(CONCAT('zijn auto met kenteken', @kenteken))
+			,		'zijn auto met kenteken'
+			,		@kenteken
+			,		'op plek'
+			,		@Plek
 			,		(SELECT sww.vd FROM SterkeWW sww WHERE sww.Stam = @Stam)
 					) + '.'
 		END
@@ -42,14 +46,17 @@ BEGIN
 					' '
 			,		(SELECT UPPER(LEFT(@Bestuurder, 1)) + SUBSTRING(@Bestuurder, 2, LEN(@Bestuurder)))
 			,		(SELECT zww.hulpwerkwoord FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
-			,		(CONCAT('zijn auto met kenteken', @kenteken))
+			,		'zijn auto met kenteken'
+			,		@kenteken
+			,		'op plek'
+			,		@Plek
 			,		(CONCAT('ge', @Stam, @Spelling))
 					) + '.'
 		END
 	END
 
 	--Woordvolgorde bij de actie 'verlaten'
-	ELSE IF (SELECT sww.actie FROM SterkeWW sww WHERE sww.Stam = @Stam) = 'verlaten' OR (SELECT zww.actie FROM ZwakkeWW zww WHERE zww.Stam = @Stam) = 'verlaten'
+	ELSE 	IF (SELECT dbo.FUNC_ActieBepaler) = 'verlaten'
 	BEGIN
 		IF EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.Stam = @Stam) 
 		BEGIN
@@ -57,6 +64,8 @@ BEGIN
 					' '
 			,		(UPPER(LEFT(@Bestuurder, 1)) + SUBSTRING(@Bestuurder, 2, LEN(@Bestuurder)))
 			,		'heeft'
+			,		'voor zijn auto met kenteken'
+			,		@Kenteken
 			,		FORMAT(98, 'C', 'nl-NL')
 			,		'betaald en'
 			,		(SELECT sww.hulpwerkwoord FROM SterkeWW sww WHERE sww.Stam = @Stam)
@@ -71,6 +80,8 @@ BEGIN
 					' '
 			,		(SELECT UPPER(LEFT(@Bestuurder, 1)) + SUBSTRING(@Bestuurder, 2, LEN(@Bestuurder)))
 			,		'heeft'
+			,		'voor zijn auto met kenteken'
+			,		@Kenteken
 			,		(FORMAT(98, 'C', 'nl-NL'))
 			,		'betaald en'
 			,		(SELECT zww.hulpwerkwoord FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
