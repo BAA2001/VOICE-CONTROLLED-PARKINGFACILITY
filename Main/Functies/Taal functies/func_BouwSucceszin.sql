@@ -66,7 +66,7 @@ BEGIN
 			,		'heeft'
 			,		'voor zijn auto met kenteken'
 			,		@Kenteken
-			,		FORMAT(98, 'C', 'nl-NL')
+--			,		FORMAT(98, 'C', 'nl-NL')
 			,		'betaald en'
 			,		(SELECT sww.hulpwerkwoord FROM SterkeWW sww WHERE sww.Stam = @Stam)
 			,		'de parkeergarage'
@@ -82,7 +82,7 @@ BEGIN
 			,		'heeft'
 			,		'voor zijn auto met kenteken'
 			,		@Kenteken
-			,		(FORMAT(98, 'C', 'nl-NL'))
+--			,		(FORMAT(98, 'C', 'nl-NL'))
 			,		'betaald en'
 			,		(SELECT zww.hulpwerkwoord FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
 			,		'de parkeergarage'
