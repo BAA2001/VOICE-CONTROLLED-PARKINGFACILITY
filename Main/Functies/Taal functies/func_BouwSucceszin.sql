@@ -3,18 +3,18 @@ GO
 
 CREATE OR ALTER FUNCTION func_BouwSucceszin
 (
+	@zin VARCHAR(100)
 )
 
 RETURNS VARCHAR(100)
 AS
 
 BEGIN
-	DECLARE @Bestuurder VARCHAR(30) = (SELECT dbo.func_LeesBestuurder)
-	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_LeesWerkwoord)
-	DECLARE @Kenteken VARCHAR(10) = (SELECT dbo.func_LeesKenteken)
-	DECLARE @Plek VARCHAR(10) = (SELECT dbo.func_getParkingSpot)
+	DECLARE @Bestuurder VARCHAR(30) = (SELECT dbo.func_LeesBestuurder(@Zin))
+	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_LeesWerkwoord(@Zin))
+	DECLARE @Kenteken VARCHAR(10) = (SELECT dbo.func_LeesKenteken(@Zin))
+	DECLARE @Plek VARCHAR(10) = (SELECT dbo.func_getParkingSpot(@Kenteken))
 	
-	DECLARE @Zin VARCHAR(100)
 	DECLARE @Infinitief VARCHAR(30) = (SELECT zww.Infinitief FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
 			DECLARE @ZonderEn VARCHAR(30) = (SELECT LEFT(@Infinitief, LEN(@Infinitief)-2))
 			DECLARE @Spelling CHAR(1) = IIF
@@ -24,7 +24,7 @@ BEGIN
 
 
 	--Woordvolgorde bij de actie 'parkeren'
-	IF (SELECT dbo.FUNC_ActieBepaler) = 'parkeren'
+	IF (SELECT dbo.FUNC_ActieBepaler(@Stam)) = 'parkeren'
 	BEGIN
 		IF EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.Stam = @Stam) 
 		BEGIN
@@ -56,7 +56,7 @@ BEGIN
 	END
 
 	--Woordvolgorde bij de actie 'verlaten'
-	ELSE 	IF (SELECT dbo.FUNC_ActieBepaler) = 'verlaten'
+	ELSE 	IF (SELECT dbo.FUNC_ActieBepaler(@Stam)) = 'verlaten'
 	BEGIN
 		IF EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.Stam = @Stam) 
 		BEGIN
