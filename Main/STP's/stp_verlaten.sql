@@ -19,10 +19,11 @@ as
 
 	if dbo.func_isCarInGarage(@plate) = 0
 		raiserror(50403, 1, 1);
-
+	
+	UPDATE [CHECK-IN_OUT] SET [CheckOut] = GETDATE() WHERE FK_Kenteken = @plate;
 
 	exec stp_VerwijderBestuurder @driver, @plate;
-	exec stp_checkInCar @plate;
+	exec stp_DetermineerSchade @plate;
 
 	return 0;
 go

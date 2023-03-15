@@ -1,7 +1,7 @@
 USE VOICE_CONTROLLED_PARKINGFACILITY;
 GO
 
-create or alter procedure stp_VerwijderBestuurder
+CREATE or ALTER PROCEDURE stp_VerwijderBestuurder
 	@driver VARCHAR(10)
 ,	@plate	VARCHAR(10)
 
