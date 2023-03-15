@@ -22,7 +22,9 @@ as
 	values (@id, @kenteken, @starttime, @endtime);
 
 
-
 	insert into TRANSACTIE_GESCHIEDENIS (FK_ID, FK_Facturering)
 	values (@id, @hourprice*@hours);
+
+	exec LOG..stp_log 'stp_fill_history', 'system', @contents= 'Execution Successful';
+	return 0;
 go
