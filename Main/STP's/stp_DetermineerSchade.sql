@@ -17,6 +17,7 @@ BEGIN
 	DECLARE @PrijsPerUur DECIMAL(9,2)
 	SET @PrijsPerUur = (SELECT PrijsPerUur FROM [UURPRIJS])
 
-	EXEC func_BerekenTotaal @TotaalTijd, @PrijsPerUur
+	declare @totaal decimal(9,2)
+	set @totaal =  dbo.func_BerekenTotaal( @TotaalTijd, @PrijsPerUur)
 
 END	

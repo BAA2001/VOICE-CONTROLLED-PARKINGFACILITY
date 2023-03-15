@@ -21,7 +21,7 @@ BEGIN
 		SELECT @Actie = Actie FROM STERKEWW WHERE Stam = @Stam
 	END
 	ELSE
-		RAISERROR (50301,1,1)
+		set @Actie = null;
 
 	RETURN @Actie
 
