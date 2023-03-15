@@ -37,5 +37,6 @@ as
 	where
 		ParkeerSpot = @spot
 
+	exec LOG..stp_log 'stp_parkRandomSpot', @plate, @contents= 'Execution Successful';
 	return 0;
 go

@@ -7,8 +7,12 @@ create or alter function func_doesNameMatchOwner (
 	) returns bit
 begin
 	if exists (select 1 from [AUTO] where Kenteken = @plate and FK_Naam = @user)
+	begin	
+		exec LOG..stp_log 'func_doesNameMatchOwner', 'func', @contents= 'Successful return.';
 		return 1;
-	
+	end
+
+	exec LOG..stp_log 'func_doesNameMatchOwner', 'func', @contents= 'Successful return.';
 	return 0;
 end
 go

@@ -48,4 +48,6 @@ as
 	select * from v_huidge_bezetting;
 	select * from v_totaal_overzicht;
 	select * from v_omzet;
+	exec LOG..stp_log 'stp_showDashboard', 'system', @contents= 'Execution Successful';
+	return 0;
 go
