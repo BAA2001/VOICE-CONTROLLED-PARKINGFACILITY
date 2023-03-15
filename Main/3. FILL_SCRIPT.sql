@@ -235,6 +235,7 @@ values	('A1', null), ('A2', null), ('A3', null), ('A4', null), ('A5', null),
 insert into uurprijs
 values (1.50);
 
+set identity_insert [check-in_out] ON;
 
 declare @iteration int = 1
 declare @random float
@@ -245,6 +246,8 @@ begin
 	exec stp_fill_history @iteration, @random;
 	set @iteration = @iteration + 1;
 end
+
+set identity_insert [check-in_out] OFF;
 
 select * from [CHECK-IN_OUT]
 select * from [TRANSACTIE_GESCHIEDENIS]
