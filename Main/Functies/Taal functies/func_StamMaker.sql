@@ -11,7 +11,12 @@ AS
 BEGIN
 
 	DECLARE @StamResult VARCHAR
-	IF
+	IF EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.tt2ep = @Werkwoord)
+	BEGIN
+		SELECT @StamResult = sww.Stam FROM SterkeWW sww WHERE sww.tt2ep = @Werkwoord
+	END
+	
+	ELSE IF
 		NOT EXISTS(SELECT '' FROM ZwakkeWW zww WHERE zww.Stam = @Werkwoord)
 		AND NOT EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.Stam = @Werkwoord)
 	BEGIN
