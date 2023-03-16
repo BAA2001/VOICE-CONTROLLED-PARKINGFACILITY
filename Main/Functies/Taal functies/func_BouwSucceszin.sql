@@ -11,10 +11,11 @@ AS
 
 BEGIN
 	DECLARE @Bestuurder VARCHAR(30) = (SELECT dbo.func_LeesBestuurder(@Zin))
-	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_LeesWerkwoord(@Zin))
 	DECLARE @Kenteken VARCHAR(10) = (SELECT dbo.func_LeesKenteken(@Zin))
 	DECLARE @Plek VARCHAR(10) = (SELECT dbo.func_getParkingSpot(@Kenteken))
-	
+	DECLARE @TotaalBedrag DEC(9,2) = (SELECT tg.FK_facturering FROM [TRANSACTIE_GESCHIEDENIS] tg JOIN [CHECK-IN_OUT] c ON c.ID = tg.FK_ID WHERE c.FK_Kenteken = @Kenteken)
+
+	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_Stammaker(dbo.func_LeesWerkwoord(@Zin)))
 	DECLARE @Infinitief VARCHAR(30) = (SELECT zww.Infinitief FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
 			DECLARE @ZonderEn VARCHAR(30) = (SELECT LEFT(@Infinitief, LEN(@Infinitief)-2))
 			DECLARE @Spelling CHAR(1) = IIF
@@ -66,7 +67,7 @@ BEGIN
 			,		'heeft'
 			,		'voor zijn auto met kenteken'
 			,		@Kenteken
---			,		FORMAT(98, 'C', 'nl-NL')
+			,		FORMAT(@TotaalBedrag, 'C', 'nl-NL')
 			,		'betaald en'
 			,		(SELECT sww.hulpwerkwoord FROM SterkeWW sww WHERE sww.Stam = @Stam)
 			,		'de parkeergarage'
@@ -82,7 +83,7 @@ BEGIN
 			,		'heeft'
 			,		'voor zijn auto met kenteken'
 			,		@Kenteken
---			,		(FORMAT(98, 'C', 'nl-NL'))
+			,		(FORMAT(@TotaalBedrag, 'C', 'nl-NL'))
 			,		'betaald en'
 			,		(SELECT zww.hulpwerkwoord FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
 			,		'de parkeergarage'
