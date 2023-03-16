@@ -26,6 +26,8 @@ as
 	
 	UPDATE [CHECK-IN_OUT] SET [CheckOut] = GETDATE() WHERE FK_Kenteken = @plate and CheckOut is null;
 
+	UPDATE [PARKEERLOCATIE] SET [FK_Kenteken] = NULL WHERE FK_Kenteken = @plate;
+
 	exec stp_maakTransactie @check_id;
 
 	return 0;

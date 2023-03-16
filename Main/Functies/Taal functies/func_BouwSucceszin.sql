@@ -13,7 +13,7 @@ BEGIN
 	DECLARE @Bestuurder VARCHAR(30) = (SELECT dbo.func_LeesBestuurder(@Zin))
 	DECLARE @Kenteken VARCHAR(10) = (SELECT dbo.func_LeesKenteken(@Zin))
 	DECLARE @Plek VARCHAR(10) = (SELECT pl.ParkeerSpot FROM [PARKEERLOCATIE] pl WHERE pl.FK_Kenteken = @Kenteken)
-	DECLARE @TotaalBedrag DEC(9,2) = (SELECT tg.FK_facturering FROM [TRANSACTIE_GESCHIEDENIS] tg JOIN [CHECK-IN_OUT] c ON c.ID = tg.FK_ID WHERE c.FK_Kenteken = @Kenteken)
+	DECLARE @TotaalBedrag DEC(9,2) = (SELECT TOP 1 tg.FK_facturering FROM [TRANSACTIE_GESCHIEDENIS] tg JOIN [CHECK-IN_OUT] c ON c.ID = tg.FK_ID WHERE c.FK_Kenteken = @Kenteken ORDER BY tg.FK_ID DESC)
 
 	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_Stammaker(dbo.func_LeesWerkwoord(@Zin)))
 	DECLARE @Infinitief VARCHAR(30) = (SELECT zww.Infinitief FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
