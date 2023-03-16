@@ -24,9 +24,12 @@ as
 	set @kenteken = dbo.func_LeesKenteken(@zin);
 	set @werkwoord = dbo.func_LeesWerkwoord(@zin);
 
+	/*
 	if not exists ( select 1 from ZWAKKEWW where Stam = @werkwoord ) 
 	and not exists ( select 1 from STERKEWW where Stam = @werkwoord )
 		set @werkwoord = RTRIM(@werkwoord, 't');
+	*/
+	set @werkwoord = (SELECT dbo.func_StamMaker(@werkwoord))
 
 	declare @actie varchar(50)
 	set @actie = dbo.func_ActieBepaler(@werkwoord);

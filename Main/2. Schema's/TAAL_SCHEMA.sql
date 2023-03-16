@@ -10,11 +10,13 @@ CREATE TABLE STERKEWW(
 ,	tt2ep VARCHAR(30)
 ,	vd VARCHAR(30)
 ,	vt VARCHAR(30)
+,	hulpwerkwoord VARCHAR(10)
 ,	Actie VARCHAR(30)
 );
 
 CREATE TABLE ZWAKKEWW(
 	Infinitief VARCHAR(30)
 ,	Stam VARCHAR(30)
+,	hulpwerkwoord VARCHAR(10)
 ,	Actie VARCHAR(30)
 );
