@@ -17,8 +17,8 @@ BEGIN
 
 	DECLARE @Stam VARCHAR(30) = (SELECT dbo.func_Stammaker(dbo.func_LeesWerkwoord(@Zin)))
 	DECLARE @Infinitief VARCHAR(30) = (SELECT zww.Infinitief FROM ZwakkeWW zww WHERE zww.Stam = @Stam)
-			DECLARE @ZonderEn VARCHAR(30) = (SELECT LEFT(@Infinitief, LEN(@Infinitief)-2))
-			DECLARE @Spelling CHAR(1) = IIF
+	DECLARE @ZonderEn VARCHAR(30) = (SELECT LEFT(@Infinitief, LEN(@Infinitief)-2))
+	DECLARE @Spelling CHAR(1) = IIF
 				(RIGHT(@ZonderEn, 1) IN ('t', 'x', 'k', 'f', 's', 'ch', 'p'),
 				't', -- Als laatste letter voorkomt in 't x kofschip, dan wordt @spelling: t
 				'd') -- Anders wordt @spelling: d
