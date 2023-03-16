@@ -10,7 +10,7 @@ RETURNS VARCHAR(30)
 AS
 BEGIN
 
-	DECLARE @StamResult VARCHAR
+	DECLARE @StamResult VARCHAR(30)
 	IF EXISTS(SELECT '' FROM SterkeWW sww WHERE sww.tt2ep = @Werkwoord)
 	BEGIN
 		SELECT @StamResult = sww.Stam FROM SterkeWW sww WHERE sww.tt2ep = @Werkwoord
