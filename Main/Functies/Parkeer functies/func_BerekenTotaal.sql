@@ -2,7 +2,7 @@ USE VOICE_CONTROLLED_PARKINGFACILITY;
 GO
 
 CREATE OR ALTER FUNCTION func_BerekenTotaal (
-	@TotaalTijd DECIMAL(9,2)
+	@TotaalTijd int
 ,	@PrijsPerUur DECIMAL(9,2)
 )	RETURNS DECIMAL(9,2)
 

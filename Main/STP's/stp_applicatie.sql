@@ -16,7 +16,7 @@ as
 	if 2 >= ( select count(1) from string_split(@zin, ' ') )
 	begin
 		exec LOG..stp_log 'stp_applicatie', 'stp', 'Execution failed. Error 50001';
-		raiserror( 50001, 1, 1)
+		raiserror( 50001, 16, 1)
 	end
 
 	declare @bestuurder varchar(30), @kenteken varchar(10), @werkwoord varchar(30);
@@ -36,7 +36,7 @@ as
 	else if @actie = 'verlaten'
 		exec stp_verlaten @bestuurder, @kenteken;
 	else
-		raiserror(50301,1,1)
+		raiserror(50301,16,1)
 
 	select dbo.func_BouwSuccesZin(@zin);
 go
