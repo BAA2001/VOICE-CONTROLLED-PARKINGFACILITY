@@ -5,8 +5,8 @@ delete from [ZwakkeWW];
 
 insert into SterkeWW values
 	('verlaten', 'verlaat', 'verlaat', 'verlaten', 'verliet', 'heeft', 'verlaten')
-,	('betalen', 'betaal', 'betaalt', 'betaald', 'betaalde', 'heeft', 'verlaten')
-,	('aankomen', 'aankom', 'aankomt', 'aangekomen', 'aankwam', 'is', 'parkeren');
+,	('gaan', 'ga', 'gaat', 'gegaan', 'ging', 'is uit', 'verlaten')
+,	('komen', 'kom', 'komt', 'gekomen', 'kwam', 'is', 'parkeren');
 
 insert into ZwakkeWW values
 	('parkeren', 'parkeer', 'heeft', 'parkeren')
