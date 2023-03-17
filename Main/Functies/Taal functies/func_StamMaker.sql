@@ -23,5 +23,10 @@ BEGIN
 		SELECT @StamResult = (LEFT(@Werkwoord, LEN(@Werkwoord) - 1))
 	END
 
+	ELSE
+	BEGIN
+		SELECT @StamResult = @Werkwoord
+	END
+
 	RETURN @StamResult
 END
